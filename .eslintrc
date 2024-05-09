@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": ["@sampotts/eslint-config/es6"],
   "env": {
     "browser": true,
@@ -13,6 +13,7 @@
     "import/no-cycle": "warn"
   },
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "requireConfigFile": false
   }
 }

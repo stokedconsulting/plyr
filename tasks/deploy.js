@@ -17,6 +17,7 @@ const size = require('gulp-size');
 // Deployment
 const aws = require('aws-sdk');
 const publish = require('gulp-awspublish');
+const cloudfront = require('gulp-cloudfront-invalidate-aws-publish');
 // Configs
 const pkg = require('../package.json');
 const deploy = require('../deploy.json');
@@ -27,13 +28,18 @@ const minSuffix = '.min';
 // Get AWS config
 Object.values(deploy).forEach((target) => {
   Object.assign(target, {
-    publisher: publish.create({
-      region: target.region,
-      params: {
-        Bucket: target.bucket,
+    publisher: publish.create(
+      {
+        region: target.region,
+        params: {
+          Bucket: target.bucket,
+        },
+        credentials: new aws.SharedIniFileCredentials({ profile: 'plyr' }),
       },
-      credentials: new aws.SharedIniFileCredentials({ profile: 'plyr' }),
-    }),
+      {
+        cacheFile: `.awspublish-${target.bucket}`,
+      },
+    ),
   });
 });
 
@@ -74,7 +80,7 @@ const options = {
     },
   },
   demo: {
-    uploadPath: branch.isBeta ? '/beta' : null,
+    uploadPath: branch.isBeta ? 'beta' : null,
     headers: {
       'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
     },
@@ -97,12 +103,12 @@ const regex =
   '(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*).(?:0|[1-9][0-9]*)(?:-[\\da-z\\-]+(?:.[\\da-z\\-]+)*)?(?:\\+[\\da-z\\-]+(?:.[\\da-z\\-]+)*)?';
 const semver = new RegExp(`v${regex}`, 'gi');
 const localPath = new RegExp('(../)?dist/', 'gi');
-const versionPath = `https://${deploy.cdn.domain}/${version}/`;
-const cdnpath = new RegExp(`${deploy.cdn.domain}/${regex}/`, 'gi');
+const versionPath = `https://${deploy.cdn.domain}/plyr/${version}/`;
+const cdnpath = new RegExp(`${deploy.cdn.domain}/plyr/${regex}/`, 'gi');
 
 const renameFile = rename((p) => {
   p.basename = p.basename.replace(minSuffix, ''); // eslint-disable-line
-  p.dirname = p.dirname.replace('.', version); // eslint-disable-line
+  p.dirname = p.dirname.replace('.', `plyr/${version}`); // eslint-disable-line
 });
 
 // Check we're on the correct branch to deploy
@@ -145,13 +151,19 @@ gulp.task('cdn', (done) => {
     return null;
   }
 
-  const { domain, publisher } = deploy.cdn;
+  const { domain, publisher, distribution } = deploy.cdn;
 
   if (!publisher) {
     throw new Error('No publisher instance. Check AWS configuration.');
   }
 
   log(`Uploading ${green(bold(pkg.version))} to ${cyan(domain)}...`);
+
+  const cfSettings = {
+    distribution,
+    wait: true,
+    indexRootPath: true,
+  };
 
   // Upload to CDN
   return (
@@ -169,6 +181,7 @@ gulp.task('cdn', (done) => {
       .pipe(replace(localPath, versionPath))
       .pipe(publisher.publish(options.cdn.headers))
       .pipe(publish.reporter())
+      .pipe(cloudfront(cfSettings))
   );
 });
 
@@ -179,7 +192,7 @@ gulp.task('demo', (done) => {
     return null;
   }
 
-  const { publisher } = deploy.demo;
+  const { publisher, distribution } = deploy.demo;
   const { domain } = deploy.cdn;
 
   if (!publisher) {
@@ -194,8 +207,14 @@ gulp.task('demo', (done) => {
     .pipe(replace(cdnpath, `${domain}/${version}/`))
     .pipe(gulp.dest(root));
 
+  const cfSettings = {
+    distribution,
+    wait: true,
+    indexRootPath: true,
+  };
+
   // Replace local file paths with remote paths in demo HTML
-  // e.g. "../dist/plyr.js" to "https://cdn.plyr.io/x.x.x/plyr.js"
+  // e.g. "../dist/plyr.js" to "https://cdn.stokedconsulting.com/plyr/x.x.x/plyr.js"
   const index = `${paths.demo}index.html`;
   const error = `${paths.demo}error.html`;
   const pages = [index];
@@ -216,6 +235,7 @@ gulp.task('demo', (done) => {
       }),
     )
     .pipe(publisher.publish(options.demo.headers))
+    .pipe(cloudfront(cfSettings))
     .pipe(publish.reporter());
 });
 

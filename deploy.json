@@ -1,12 +1,14 @@
 {
   "cdn": {
-    "bucket": "plyr",
-    "domain": "cdn.plyr.io",
-    "region": "us-east-1"
+    "bucket": "cdn.stokedconsulting.com",
+    "domain": "cdn.stokedconsulting.com",
+    "region": "us-east-1",
+    "distribution": "E1LHVW5B301R89"
   },
   "demo": {
-    "bucket": "plyr.io",
-    "domain": "plyr.io",
-    "region": "us-west-1"
+    "bucket": "plyr.stokedconsulting.com",
+    "domain": "plyr.stokedconsulting.com",
+    "region": "us-east-1",
+    "distribution": "E2IOWEJQSXYINI"
   }
 }

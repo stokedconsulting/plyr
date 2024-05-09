@@ -7,7 +7,7 @@ Plyr is a simple, lightweight, accessible and customizable HTML5, YouTube and Vi
 
 [![npm version](https://badge.fury.io/js/plyr.svg)](https://badge.fury.io/js/plyr) [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/sampotts/plyr) [![Financial Contributors on Open Collective](https://opencollective.com/plyr/all/badge.svg?label=financial+contributors)](https://opencollective.com/plyr)
 
-[![Screenshot of Plyr](https://cdn.plyr.io/static/screenshot.webp)](https://plyr.io)
+[![Screenshot of Plyr](https://cdn.stokedconsulting.com/plyr/static/screenshot.webp)](https://plyr.io)
 
 # Features
 
@@ -137,13 +137,13 @@ See [initialising](#initializing) for more information on advanced setups.
 You can use our CDN (provided by [Cloudflare](https://www.cloudflare.com/)) for the JavaScript. There's 2 versions; one with and one without [polyfills](#polyfills). My recommendation would be to manage polyfills separately as part of your application but to make life easier you can use the polyfilled build.
 
 ```html
-<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script src="https://cdn.stokedconsulting.com/3.7.8/plyr.js"></script>
 ```
 
 ...or...
 
 ```html
-<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<script src="https://cdn.stokedconsulting.com/3.7.8/plyr.polyfilled.js"></script>
 ```
 
 ## CSS
@@ -157,13 +157,13 @@ Include the `plyr.css` stylesheet into your `<head>`.
 If you want to use our CDN (provided by [Cloudflare](https://www.cloudflare.com/)) for the default CSS, you can use the following:
 
 ```html
-<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+<link rel="stylesheet" href="https://cdn.stokedconsulting.com/3.7.8/plyr.css" />
 ```
 
 ## SVG Sprite
 
 The SVG sprite is loaded automatically from our CDN (provided by [Cloudflare](https://www.cloudflare.com/)). To change this, see the [options](#options) below. For
-reference, the CDN hosted SVG sprite can be found at `https://cdn.plyr.io/3.7.8/plyr.svg`.
+reference, the CDN hosted SVG sprite can be found at `https://cdn.stokedconsulting.com/3.7.8/plyr.svg`.
 
 ### Self hosting
 
@@ -391,7 +391,7 @@ Note the single quotes encapsulating the JSON and double quotes on the object ke
 | `loadSprite`         | Boolean                    | `true`                                                                                                                         | Load the SVG sprite specified as the `iconUrl` option (if a URL). If `false`, it is assumed you are handling sprite loading yourself.                                                                                                                                                                                                                                                                                                   |
 | `iconUrl`            | String                     | `null`                                                                                                                         | Specify a URL or path to the SVG sprite. See the [SVG section](#svg) for more info.                                                                                                                                                                                                                                                                                                                                                     |
 | `iconPrefix`         | String                     | `plyr`                                                                                                                         | Specify the id prefix for the icons used in the default controls (e.g. "plyr-play" would be "plyr"). This is to prevent clashes if you're using your own SVG sprite but with the default controls. Most people can ignore this option.                                                                                                                                                                                                  |
-| `blankVideo`         | String                     | `https://cdn.plyr.io/static/blank.mp4`                                                                                         | Specify a URL or path to a blank video file used to properly cancel network requests.                                                                                                                                                                                                                                                                                                                                                   |
+| `blankVideo`         | String                     | `https://cdn.stokedconsulting.com/plyr/static/blank.mp4`                                                                                         | Specify a URL or path to a blank video file used to properly cancel network requests.                                                                                                                                                                                                                                                                                                                                                   |
 | `autoplay`&sup2;     | Boolean                    | `false`                                                                                                                        | Autoplay the media on load. If the `autoplay` attribute is present on a `<video>` or `<audio>` element, this will be automatically set to true.                                                                                                                                                                                                                                                                                         |
 | `autopause`&sup1;    | Boolean                    | `true`                                                                                                                         | Only allow one player playing at once.                                                                                                                                                                                                                                                                                                                                                                                                  |
 | `playsinline`&sup3;  | Boolean                    | `true`                                                                                                                         | Allow inline playback on iOS. Note this has no effect on iPadOS.                                                                                                                                                                                                                                                                                                                                                                        |
@@ -741,7 +741,7 @@ document then the shortcuts will work when any element has focus, apart from an 
 
 It's possible to display preview thumbnails as per the demo when you hover over the scrubber or while you are scrubbing in the main video area. This can be used for all video types but is easiest with HTML5 of course. You will need to generate the sprite or images yourself. This is possible using something like AWS transcoder to generate the frames and then combine them into a sprite image. Sprites are recommended for performance reasons - they will be much faster to download and easier to compress into a small file size making them load faster.
 
-You can see the example VTT files [here](https://cdn.plyr.io/static/demo/thumbs/100p.vtt) and [here](https://cdn.plyr.io/static/demo/thumbs/240p.vtt) for how the sprites are done. The coordinates are set as the `xywh` hash on the URL in the order X Offset, Y Offset, Width, Height (e.g. `240p-00001.jpg#xywh=1708,480,427,240` is offset `1708px` from the left, `480px` from the top and is `427x240px`. If you want to include images per frame, this is also possible but will be slower, resulting in a degraded experience.
+You can see the example VTT files [here](https://cdn.stokedconsulting.com/plyr/static/demo/thumbs/100p.vtt) and [here](https://cdn.stokedconsulting.com/plyr/static/demo/thumbs/240p.vtt) for how the sprites are done. The coordinates are set as the `xywh` hash on the URL in the order X Offset, Y Offset, Width, Height (e.g. `240p-00001.jpg#xywh=1708,480,427,240` is offset `1708px` from the left, `480px` from the top and is `427x240px`. If you want to include images per frame, this is also possible but will be slower, resulting in a degraded experience.
 
 # Fullscreen
 

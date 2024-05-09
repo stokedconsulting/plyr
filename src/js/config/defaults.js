@@ -60,10 +60,10 @@ const defaults = {
   // Sprite (for icons)
   loadSprite: true,
   iconPrefix: 'plyr',
-  iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
+  iconUrl: 'https://cdn.stokedconsulting.com/3.7.8/plyr.svg',
 
   // Blank video (used to prevent errors on source change)
-  blankVideo: 'https://cdn.plyr.io/static/blank.mp4',
+  blankVideo: 'https://cdn.stokedconsulting.com/plyr/static/blank.mp4',
 
   // Quality default
   quality: {

@@ -7,7 +7,6 @@
 import 'custom-event-polyfill';
 import 'url-polyfill';
 
-import * as Sentry from '@sentry/browser';
 import Shr from 'shr-buttons';
 
 import Plyr from '../../../src/js/plyr';
@@ -19,10 +18,6 @@ import sources from './sources';
 
   // Sentry for demo site (https://plyr.io) only
   if (isProduction) {
-    Sentry.init({
-      dsn: 'https://d4ad9866ad834437a4754e23937071e4@sentry.io/305555',
-      whitelistUrls: [production].map((d) => new RegExp(`https://(([a-z0-9])+(.))*${d}`)),
-    });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -58,7 +53,10 @@ import sources from './sources';
       }, */
       previewThumbnails: {
         enabled: true,
-        src: ['https://cdn.plyr.io/static/demo/thumbs/100p.vtt', 'https://cdn.plyr.io/static/demo/thumbs/240p.vtt'],
+        src: [
+          'https://cdn.stokedconsulting.com/plyr/static/demo/thumbs/100p.vtt',
+          'https://cdn.stokedconsulting.com/plyr/static/demo/thumbs/240p.vtt',
+        ],
       },
       vimeo: {
         // Prevent Vimeo blocking plyr.io demo site
@@ -70,7 +68,7 @@ import sources from './sources';
         artist: 'Brainfarm',
         artwork: [
           {
-            src: 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg',
+            src: 'https://cdn.stokedconsulting.com/plyr/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg',
             type: 'image/jpeg',
           },
         ],

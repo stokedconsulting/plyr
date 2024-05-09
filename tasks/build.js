@@ -8,10 +8,10 @@ const path = require('path');
 const gulp = require('gulp');
 // JavaScript
 const terser = require('gulp-terser');
-const rollup = require('gulp-better-rollup');
-const babel = require('rollup-plugin-babel');
-const commonjs = require('rollup-plugin-commonjs');
-const resolve = require('rollup-plugin-node-resolve');
+const rollup = require('@stokedconsulting/gulp-better-rollup');
+const babel = require('@rollup/plugin-babel');
+const commonjs = require('@rollup/plugin-commonjs');
+const resolve = require('@rollup/plugin-node-resolve');
 // CSS
 const sass = require('gulp-sass')(require('sass'));
 const postcss = require('gulp-postcss');
@@ -118,7 +118,7 @@ Object.entries(build.js).forEach(([filename, entry]) => {
                       },
                     ],
                   ],
-                  plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-optional-chaining'],
+                  plugins: ['@babel/plugin-transform-class-properties', '@babel/plugin-transform-optional-chaining'],
                   babelrc: false,
                   exclude: [/\/core-js\//],
                 }),
@@ -219,9 +219,11 @@ gulp.task('serve', () =>
     server: {
       baseDir: paths.demo.root,
     },
+    ui: {},
     notify: false,
     watch: true,
     ghostMode: false,
+    port: 6160,
   }),
 );
 
